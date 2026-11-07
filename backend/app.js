@@ -11,6 +11,7 @@ import adminRoutes from "./routes/admin.js";
 import { notFound, errorHandler } from "./middleware/errorHandler.js";
 
 const app = express();
+app.set("trust proxy", 1);
 
 app.use(helmet());
 app.use(cors({ origin: env.CLIENT_URL, credentials: true }));
