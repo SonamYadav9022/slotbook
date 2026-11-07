@@ -1,0 +1,25 @@
+services:
+  mongo:
+    image: mongo:7
+    volumes:
+      - mongo_data:/data/db
+
+  backend:
+    build: ./backend
+    environment:
+      MONGO_URI: mongodb://mongo:27017/slotbook
+      JWT_ACCESS_SECRET: replace-with-a-long-random-string
+      JWT_REFRESH_SECRET: replace-with-another-long-random-string
+      CLIENT_URL: http://localhost:3000
+    depends_on:
+      - mongo
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+
+volumes:
+  mongo_data:
